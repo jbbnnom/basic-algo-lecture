@@ -6,11 +6,17 @@ int dat[MX], pre[MX], nxt[MX];
 int unused = 1;
 
 void insert(int addr, int num){
-
+  dat[unused] = num;
+  pre[unused] = addr;
+  nxt[unused] = nxt[addr];
+  nxt[addr] = unused;
+  if (nxt[unused] != -1) pre[nxt[unused]] = unused;  // 마지막 위치 뒤에 새 원소를 추가하는 경우
+  ++unused;
 }
 
 void erase(int addr){
-
+  nxt[pre[addr]] = nxt[addr];
+  if (nxt[addr] != -1) pre[nxt[addr]] = pre[addr];  // 마지막 위치의 원소를 제거하는 경우
 }
 
 void traverse(){
